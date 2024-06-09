@@ -1,0 +1,27 @@
+@baseUrl = http://localhost:3000
+
+### GET all songs
+GET {{baseUrl}}/songs
+
+### CREATE 1 song
+POST {{baseUrl}}/songs
+Content-Type: application/json
+
+{
+  "title": "last love",
+  "artists": ["John"],
+  "releasedDate": "2024-09-29",
+  "duration": "02:30"
+}
+
+### GET 1 song
+GET {{baseUrl}}/songs/1
+
+### EDIT 1 song
+PUT {{baseUrl}}/songs/1
+
+### DELETE 1 song
+DELETE {{baseUrl}}/song/1
+
+###
+GET {{baseUrl}}
