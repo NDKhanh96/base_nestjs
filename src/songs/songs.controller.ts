@@ -3,17 +3,26 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   ParseIntPipe,
   Post,
   Put,
+  Scope,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './create-song-dto';
+import { Connection } from '../common/constants/connection';
 
-@Controller('songs')
+@Controller({ path: 'songs', scope: Scope.REQUEST })
 export class SongsController {
-  constructor(private songsService: SongsService) {}
+  constructor(
+    private songsService: SongsService,
+    @Inject('CONNECTION')
+    private connection: Connection,
+  ) {
+    console.log(`this is connection ${this.connection.CONNECTION_STRING}`);
+  }
 
   @Get()
   findAll() {

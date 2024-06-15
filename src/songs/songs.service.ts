@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { Song } from '../types';
 
-@Injectable()
+@Injectable({
+  scope: Scope.TRANSIENT,
+})
 export class SongsService {
   private readonly songs: Song[] = [];
 
