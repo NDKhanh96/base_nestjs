@@ -1,4 +1,4 @@
-export type Song = {
+export type SongDTO = {
   title: string;
   artists: string[];
   releasedDate: Date;
