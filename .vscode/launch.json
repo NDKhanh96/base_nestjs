@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/src/main.ts", // Đường dẫn đến file chính của ứng dụng
+      "preLaunchTask": "tsc: build - tsconfig.json", // Biên dịch TypeScript trước khi chạy (nếu cần)
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"], // Đường dẫn đến các file JS sau khi biên dịch
+      "env": {
+        "NODE_ENV": "development" // Thiết lập biến môi trường (nếu cần)
+      }
+    }
+  ]
+}

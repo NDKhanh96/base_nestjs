@@ -5,25 +5,32 @@ import {
   type IPaginationOptions,
   type Pagination,
 } from 'nestjs-typeorm-paginate';
+import { Artist } from 'src/artists/artist.entity';
 import type { CreateSongDto } from 'src/songs/dto/create-song-dto';
-import type { updateSongDTO } from 'src/songs/dto/update-song-dto';
+import type { UpdateSongDTO } from 'src/songs/dto/update-song-dto';
 import { Song } from 'src/songs/song.entity';
-import type { Repository, UpdateResult } from 'typeorm';
+import { In, type Repository, type UpdateResult } from 'typeorm';
 
 @Injectable()
 export class SongsService {
   constructor(
     @InjectRepository(Song)
     private songsRepository: Repository<Song>,
+    @InjectRepository(Artist)
+    private artistsRepository: Repository<Artist>,
   ) {}
 
-  async create(SongDTO: CreateSongDto): Promise<Song> {
+  async create(createSongDTO: CreateSongDto): Promise<Song> {
     const song = new Song();
-    song.title = SongDTO.title;
-    song.artists = SongDTO.artists;
-    song.duration = SongDTO.duration;
-    song.lyrics = SongDTO.lyrics;
-    song.releasedDate = SongDTO.releasedDate;
+    song.title = createSongDTO.title;
+    song.artists = createSongDTO.artists;
+    song.duration = createSongDTO.duration;
+    song.lyrics = createSongDTO.lyrics;
+    song.releasedDate = createSongDTO.releasedDate;
+
+    song.artists = await this.artistsRepository.findBy({
+      id: In(createSongDTO.artists),
+    });
 
     return await this.songsRepository.save(song);
   }
@@ -42,7 +49,7 @@ export class SongsService {
 
   async update(
     id: number,
-    recordToUpdate: updateSongDTO,
+    recordToUpdate: UpdateSongDTO,
   ): Promise<UpdateResult> {
     return await this.songsRepository.update(id, recordToUpdate);
   }

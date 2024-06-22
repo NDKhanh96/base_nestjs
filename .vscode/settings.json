@@ -9,5 +9,8 @@
             "database": "demo_nestjs",
             "username": "postgres"
         }
-    ]
+    ],
+    "editor.codeActionsOnSave": {
+        "source.organizeImports":"always"
+    },
 }
