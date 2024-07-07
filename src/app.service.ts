@@ -8,7 +8,4 @@ export class AppService {
     @Inject('CONFIG')
     private config: { port: string },
   ) {}
-  getHello(): string {
-    return `DB run from: ${this.devConfigService.getDBHost()} PORT ${this.config.port}`;
-  }
 }

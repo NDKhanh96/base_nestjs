@@ -1,0 +1,8 @@
+### Login Artist
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "ndk@gmail.com",
+    "password": "123456"
+}

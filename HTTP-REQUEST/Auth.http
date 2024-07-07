@@ -1,0 +1,51 @@
+### Signup User
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+    "firstName": "Duy Khanh",
+    "lastName": "Nguyen",
+    "email": "ndkhanh@gmail.com",
+    "password": "123456"
+}
+
+### Login User
+### @name tokenAPI
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "ndk@gmail.com",
+    "password": "123456"
+}
+
+### Login Artist
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "john12@gmail.com",
+    "password": "123456"
+}
+
+### Profile
+### @name getUser
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer be509d3c-e6a9-40c4-9bb9-55b64876bea5
+
+### Enable 2FA
+GET {{baseUrl}}/auth/enable-2fa
+Authorization: Bearer {{accessToken}}
+
+### Validate 2FA Token
+POST {{baseUrl}}/auth/validate-2fa
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "token": "371098"
+}
+
+### Disable 2FA
+GET {{baseUrl}}/auth/disable-2fa
+Authorization: Bearer {{accessToken}}

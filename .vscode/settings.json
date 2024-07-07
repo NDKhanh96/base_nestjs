@@ -10,7 +10,28 @@
             "username": "postgres"
         }
     ],
+    "rest-client.environmentVariables": {
+        "$shared": {
+            "version": "v1",
+            "prodToken": "foo",
+            "devToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5ka0BnbWFpbC5jb20iLCJ1c2VySWQiOjMsImlhdCI6MTcxOTY1NjI2OCwiZXhwIjoxNzE5NzQyNjY4fQ.4cSgWYBpGDFwJRFgVqqyOD7svsMLYTYUIm5oAufImZ8"
+        },
+        "local": {
+            "version": "v2",
+            "baseUrl": "http://localhost:3000",
+            "accessToken": "{{$shared devToken}}",
+            "secretKey": "devSecret"
+        },
+        "production": {
+            "host": "example.com",
+            "token": "{{$shared prodToken}}",
+            "secretKey" : "prodSecret"
+        }
+    },
     "editor.codeActionsOnSave": {
         "source.organizeImports":"always"
     },
+    "cSpell.words": [
+        "totp"
+    ],
 }

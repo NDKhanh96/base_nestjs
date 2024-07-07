@@ -1,9 +1,4 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Artist } from 'src/artists/artist.entity';
@@ -12,10 +7,13 @@ import { Song } from 'src/songs/song.entity';
 import { User } from 'src/users/user.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ArtistsModule } from './artists/artists.module';
+import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { DevConfigService } from './common/providers/DevConfigService';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { SongsModule } from './songs/songs.module';
+import { UsersModule } from './users/users.module';
 
 const devConfig = { port: 3000 };
 const proConfig = { port: 4000 };
@@ -39,6 +37,9 @@ const proConfig = { port: 4000 };
     }),
     SongsModule,
     PlaylistsModule,
+    AuthModule,
+    UsersModule,
+    ArtistsModule,
   ],
   controllers: [AppController],
   providers: [
@@ -53,8 +54,6 @@ const proConfig = { port: 4000 };
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .forRoutes({ path: 'songs', method: RequestMethod.POST });
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }
