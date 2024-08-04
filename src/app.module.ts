@@ -18,6 +18,11 @@ import { UsersModule } from './users/users.module';
 const devConfig = { port: 3000 };
 const proConfig = { port: 4000 };
 
+/**
+ * TypeORMError: Entity metadata for Song#playlist was not found.
+ * Check if you specified a correct entity object and if it's connected in the connection options.
+ * Nếu bị lỗi trên thì cần thêm Playlist vào mảng entities của TypeOrmModule.forRoot, tương tự với Artist và User
+ */
 @Module({
   imports: [
     // env config module must be imported first

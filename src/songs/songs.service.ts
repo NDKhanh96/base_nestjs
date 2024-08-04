@@ -9,7 +9,12 @@ import { Artist } from 'src/artists/artist.entity';
 import type { CreateSongDto } from 'src/songs/dto/create-song-dto';
 import type { UpdateSongDTO } from 'src/songs/dto/update-song-dto';
 import { Song } from 'src/songs/song.entity';
-import { In, type Repository, type UpdateResult } from 'typeorm';
+import {
+  In,
+  type Repository,
+  type SelectQueryBuilder,
+  type UpdateResult,
+} from 'typeorm';
 
 @Injectable()
 export class SongsService {
@@ -32,7 +37,8 @@ export class SongsService {
       id: In(createSongDTO.artists),
     });
 
-    return await this.songsRepository.save(song);
+    await this.songsRepository.save(song);
+    return song;
   }
 
   async findAll(): Promise<Song[]> {
@@ -55,7 +61,8 @@ export class SongsService {
   }
 
   async paginate(options: IPaginationOptions): Promise<Pagination<Song>> {
-    const queryBuilder = this.songsRepository.createQueryBuilder('songs');
+    const queryBuilder: SelectQueryBuilder<Song> =
+      this.songsRepository.createQueryBuilder('songs');
     queryBuilder.orderBy('songs.releasedDate', 'DESC');
     return paginate<Song>(queryBuilder, options);
   }

@@ -19,10 +19,12 @@ import type { UpdateResult } from 'typeorm';
 import { CreateSongDto } from './dto/create-song-dto';
 import { SongsService } from './songs.service';
 
-@Controller({ path: 'songs', scope: Scope.REQUEST })
+@Controller({ path: 'songs', scope: Scope.DEFAULT })
 export class SongsController {
   constructor(private songsService: SongsService) {}
-
+  /**
+   * @UseGuards(ArtistsJwtGuard) để yêu cầu jwt cho router này
+   */
   @Post()
   @UseGuards(ArtistsJwtGuard)
   create(@Body() createSongDto: CreateSongDto): Promise<Song> {
