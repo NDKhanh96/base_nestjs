@@ -5,11 +5,11 @@ import type { Repository } from 'typeorm';
 
 @Injectable()
 export class ArtistsService {
-  constructor(
+    constructor(
     @InjectRepository(Artist) private artistRepo: Repository<Artist>,
-  ) {}
+    ) {}
 
-  findArtist(userId: number): Promise<Artist> {
-    return this.artistRepo.findOneBy({ user: { id: userId } });
-  }
+    findArtist(userId: number): Promise<Artist> {
+        return this.artistRepo.findOneBy({ user: { id: userId } });
+    }
 }

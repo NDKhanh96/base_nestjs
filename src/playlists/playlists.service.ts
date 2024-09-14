@@ -8,7 +8,7 @@ import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class PlaylistsService {
-  constructor(
+    constructor(
     @InjectRepository(Playlist)
     private playlistRepo: Repository<Playlist>,
 
@@ -17,19 +17,19 @@ export class PlaylistsService {
 
     @InjectRepository(User)
     private userRepo: Repository<User>,
-  ) {}
+    ) {}
 
-  async create(playListDTO: CreatePlaylistDto): Promise<Playlist> {
-    const playList = new Playlist();
-    const user = await this.userRepo.findOneBy({ id: playListDTO.user });
-    const songs = await this.songsRepo.findBy({
-      id: In(playListDTO.songs),
-    });
+    async create(playListDTO: CreatePlaylistDto): Promise<Playlist> {
+        const playList = new Playlist();
+        const user = await this.userRepo.findOneBy({ id: playListDTO.user });
+        const songs = await this.songsRepo.findBy({
+            id: In(playListDTO.songs),
+        });
 
-    playList.name = playListDTO.name;
-    playList.user = user;
-    playList.songs = songs;
+        playList.name = playListDTO.name;
+        playList.user = user;
+        playList.songs = songs;
 
-    return this.playlistRepo.save(playList);
-  }
+        return this.playlistRepo.save(playList);
+    }
 }

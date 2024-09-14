@@ -7,8 +7,8 @@ import { PlayListsController } from './playlists.controller';
 import { PlaylistsService } from './playlists.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Playlist, Song, User])],
-  controllers: [PlayListsController],
-  providers: [PlaylistsService],
+    imports: [TypeOrmModule.forFeature([Playlist, Song, User])],
+    controllers: [PlayListsController],
+    providers: [PlaylistsService],
 })
 export class PlaylistsModule {}

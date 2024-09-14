@@ -20,45 +20,45 @@ import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
  * Nếu bị lỗi trên thì cần thêm Playlist vào mảng entities của TypeOrmModule.forRoot, tương tự với Artist và User
  */
 @Module({
-  imports: [
+    imports: [
     // env config module must be imported first
-    ConfigModule.forRoot({
-      envFilePath: getEnvFilePathSync(),
-      isGlobal: true,
-      /**
-       * Những file cấu hình trong mảng load có thể được dùng như biến env.
-       * Ví dụ: dbConfig() sẽ trả về một object chứa thông tin cấu hình db
-       * và có thể sử dụng như một biến env thông qua ConfigModule.
-       * Ví dụ: ConfigService.get<number>('port') sẽ trả về giá trị của dbConfig().port dưới dạng number.
-       * Chỉ nên xử dụng những biến môi trường trong thư mục src/utils/common/constants để dễ quản lý thay vì dùng trực tiếp trong file .env
-       */
-      load: [dbConfig, globalConfig],
-    }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        type: 'mysql',
-        host: configService.get<string>('host'),
-        port: configService.get<number>('dbPort'),
-        username: configService.get<string>('username'),
-        password: configService.get<string>('password'),
-        database: configService.get<string>('database'),
-        synchronize: configService.get<boolean>('isDevelopENV'),
-        entities: [Song, Artist, User, Playlist],
-      }),
-      inject: [ConfigService],
-    }),
-    SongsModule,
-    PlaylistsModule,
-    AuthModule,
-    UsersModule,
-    ArtistsModule,
-  ],
-  controllers: [],
-  providers: [],
+        ConfigModule.forRoot({
+            envFilePath: getEnvFilePathSync(),
+            isGlobal: true,
+            /**
+             * Những file cấu hình trong mảng load có thể được dùng như biến env.
+             * Ví dụ: dbConfig() sẽ trả về một object chứa thông tin cấu hình db
+             * và có thể sử dụng như một biến env thông qua ConfigModule.
+             * Ví dụ: ConfigService.get<number>('port') sẽ trả về giá trị của dbConfig().port dưới dạng number.
+             * Chỉ nên xử dụng những biến môi trường trong thư mục src/utils/common/constants để dễ quản lý thay vì dùng trực tiếp trong file .env
+             */
+            load: [dbConfig, globalConfig],
+        }),
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: async (configService: ConfigService) => ({
+                type: 'mysql',
+                host: configService.get<string>('host'),
+                port: configService.get<number>('dbPort'),
+                username: configService.get<string>('username'),
+                password: configService.get<string>('password'),
+                database: configService.get<string>('database'),
+                synchronize: configService.get<boolean>('isDevelopENV'),
+                entities: [Song, Artist, User, Playlist],
+            }),
+            inject: [ConfigService],
+        }),
+        SongsModule,
+        PlaylistsModule,
+        AuthModule,
+        UsersModule,
+        ArtistsModule,
+    ],
+    controllers: [],
+    providers: [],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('*');
-  }
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(LoggerMiddleware).forRoutes('*');
+    }
 }

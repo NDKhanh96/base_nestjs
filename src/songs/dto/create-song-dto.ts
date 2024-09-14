@@ -1,18 +1,18 @@
 import {
-  IsArray,
-  IsDateString,
-  IsMilitaryTime,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
+    IsArray,
+    IsDateString,
+    IsMilitaryTime,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
 } from 'class-validator';
 import type { Artist } from 'src/artists/artist.entity';
 
 export class CreateSongDto {
   @IsString()
   @IsNotEmpty()
-  readonly title: string;
+    readonly title: string;
 
   @IsNotEmpty()
   @IsArray()
@@ -25,7 +25,7 @@ export class CreateSongDto {
 
   @IsMilitaryTime()
   @IsNotEmpty()
-  duration: Date;
+      duration: Date;
 
   @IsString()
   @IsOptional()

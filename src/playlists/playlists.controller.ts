@@ -5,12 +5,12 @@ import { PlaylistsService } from './playlists.service';
 
 @Controller('playlists')
 export class PlayListsController {
-  constructor(private playListService: PlaylistsService) {}
+    constructor(private playListService: PlaylistsService) {}
   @Post()
-  create(
+    create(
     @Body()
-    playlistDTO: CreatePlaylistDto,
-  ): Promise<Playlist> {
-    return this.playListService.create(playlistDTO);
-  }
+        playlistDTO: CreatePlaylistDto,
+    ): Promise<Playlist> {
+        return this.playListService.create(playlistDTO);
+    }
 }

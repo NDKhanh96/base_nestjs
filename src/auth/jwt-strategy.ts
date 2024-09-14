@@ -6,19 +6,19 @@ import type { PayloadType } from 'src/types';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: authConstants.secret,
-    });
-  }
+    constructor() {
+        super({
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            ignoreExpiration: false,
+            secretOrKey: authConstants.secret,
+        });
+    }
 
-  async validate(payload: PayloadType) {
-    return {
-      userId: payload.userId,
-      email: payload.email,
-      artistId: payload.artistId,
-    };
-  }
+    async validate(payload: PayloadType) {
+        return {
+            userId: payload.userId,
+            email: payload.email,
+            artistId: payload.artistId,
+        };
+    }
 }

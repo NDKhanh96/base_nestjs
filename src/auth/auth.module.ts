@@ -9,16 +9,16 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 @Module({
-  imports: [
-    UsersModule,
-    ArtistsModule,
-    JwtModule.register({
-      secret: authConstants.secret,
-      signOptions: { expiresIn: '1d' },
-    }),
-  ],
-  providers: [AuthService, JwtStrategy, ApiKeyStrategy],
-  controllers: [AuthController],
-  exports: [AuthService],
+    imports: [
+        UsersModule,
+        ArtistsModule,
+        JwtModule.register({
+            secret: authConstants.secret,
+            signOptions: { expiresIn: '1d' },
+        }),
+    ],
+    providers: [AuthService, JwtStrategy, ApiKeyStrategy],
+    controllers: [AuthController],
+    exports: [AuthService],
 })
 export class AuthModule {}

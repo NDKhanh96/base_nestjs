@@ -5,16 +5,17 @@ import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class ApiKeyStrategy extends PassportStrategy(Strategy) {
-  constructor(private authService: AuthService) {
-    super();
-  }
-
-  async validate(apiKey: string) {
-    const user = await this.authService.validateUserByApiKey(apiKey);
-    if (!user) {
-      throw new UnauthorizedException();
+    constructor(private authService: AuthService) {
+        super();
     }
 
-    return user;
-  }
+    async validate(apiKey: string) {
+        const user = await this.authService.validateUserByApiKey(apiKey);
+
+        if (!user) {
+            throw new UnauthorizedException();
+        }
+
+        return user;
+    }
 }

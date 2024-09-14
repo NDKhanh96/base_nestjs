@@ -6,8 +6,8 @@ import { SongsService } from './songs.service';
 import { Artist } from 'src/artists/artist.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Song, Artist])],
-  controllers: [SongsController],
-  providers: [SongsService],
+    imports: [TypeOrmModule.forFeature([Song, Artist])],
+    controllers: [SongsController],
+    providers: [SongsService],
 })
 export class SongsModule {}

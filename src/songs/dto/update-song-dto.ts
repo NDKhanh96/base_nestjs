@@ -1,17 +1,17 @@
 import {
-  IsArray,
-  IsDateString,
-  IsMilitaryTime,
-  IsNumber,
-  IsOptional,
-  IsString,
+    IsArray,
+    IsDateString,
+    IsMilitaryTime,
+    IsNumber,
+    IsOptional,
+    IsString,
 } from 'class-validator';
 import type { Artist } from 'src/artists/artist.entity';
 
 export class UpdateSongDTO {
   @IsString()
   @IsOptional()
-  readonly title: string;
+    readonly title: string;
 
   @IsOptional()
   @IsArray()
