@@ -6,7 +6,7 @@
             "port": 5432,
             "driver": "PostgreSQL",
             "name": "PG@localhost",
-            "database": "demo_nestjs",
+            "database": "base_nestjs",
             "username": "postgres"
         }
     ],
@@ -18,7 +18,7 @@
         },
         "local": {
             "version": "v2",
-            "baseUrl": "http://localhost:3000",
+            "baseUrl": "http://localhost:8080",
             "accessToken": "{{$shared devToken}}",
             "secretKey": "devSecret"
         },

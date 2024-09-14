@@ -1,22 +1,18 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Artist } from 'src/artists/artist.entity';
 import { Playlist } from 'src/playlists/playlist.entity';
 import { Song } from 'src/songs/song.entity';
 import { User } from 'src/users/user.entity';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { dbConfig, globalConfig } from 'src/utils/common/constants';
+import { getEnvFilePathSync } from 'src/utils/common/environment/checkGitBranch';
 import { ArtistsModule } from './artists/artists.module';
 import { AuthModule } from './auth/auth.module';
-import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { DevConfigService } from './common/providers/DevConfigService';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { SongsModule } from './songs/songs.module';
 import { UsersModule } from './users/users.module';
-
-const devConfig = { port: 3000 };
-const proConfig = { port: 4000 };
+import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
 
 /**
  * TypeORMError: Entity metadata for Song#playlist was not found.
@@ -27,18 +23,30 @@ const proConfig = { port: 4000 };
   imports: [
     // env config module must be imported first
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: getEnvFilePathSync(),
       isGlobal: true,
+      /**
+       * Những file cấu hình trong mảng load có thể được dùng như biến env.
+       * Ví dụ: dbConfig() sẽ trả về một object chứa thông tin cấu hình db
+       * và có thể sử dụng như một biến env thông qua ConfigModule.
+       * Ví dụ: ConfigService.get<number>('port') sẽ trả về giá trị của dbConfig().port dưới dạng number.
+       * Chỉ nên xử dụng những biến môi trường trong thư mục src/utils/common/constants để dễ quản lý thay vì dùng trực tiếp trong file .env
+       */
+      load: [dbConfig, globalConfig],
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '123456',
-      database: 'demo_nestjs',
-      entities: [Song, Artist, User, Playlist],
-      synchronize: process.env.NODE_ENV === 'development',
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get<string>('host'),
+        port: configService.get<number>('dbPort'),
+        username: configService.get<string>('username'),
+        password: configService.get<string>('password'),
+        database: configService.get<string>('database'),
+        synchronize: configService.get<boolean>('isDevelopENV'),
+        entities: [Song, Artist, User, Playlist],
+      }),
+      inject: [ConfigService],
     }),
     SongsModule,
     PlaylistsModule,
@@ -46,16 +54,8 @@ const proConfig = { port: 4000 };
     UsersModule,
     ArtistsModule,
   ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    DevConfigService,
-    {
-      provide: 'CONFIG',
-      useFactory: () =>
-        process.env.NODE_ENV === 'development' ? devConfig : proConfig,
-    },
-  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

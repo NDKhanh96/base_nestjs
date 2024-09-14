@@ -34,7 +34,7 @@ describe('Song - /songs', (): void => {
           port: 5432,
           username: 'postgres',
           password: '123456',
-          database: 'demo_nestjs_test',
+          database: 'base_nestjs_test',
           synchronize: true,
           entities: [Song, Artist, Playlist, User],
           dropSchema: true,
