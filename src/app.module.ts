@@ -1,16 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Artist } from 'src/artists/artist.entity';
-import { Playlist } from 'src/playlists/playlist.entity';
-import { Song } from 'src/songs/song.entity';
 import { User } from 'src/users/user.entity';
 import { dbConfig, globalConfig } from 'src/utils/common/constants';
 import { getEnvFilePathSync } from 'src/utils/common/environment/checkGitBranch';
-import { ArtistsModule } from './artists/artists.module';
 import { AuthModule } from './auth/auth.module';
-import { PlaylistsModule } from './playlists/playlists.module';
-import { SongsModule } from './songs/songs.module';
 import { UsersModule } from './users/users.module';
 import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
 
@@ -44,15 +38,12 @@ import { LoggerMiddleware } from './utils/common/middleware/logger.middleware';
                 password: configService.get<string>('password'),
                 database: configService.get<string>('database'),
                 synchronize: configService.get<boolean>('isDevelopENV'),
-                entities: [Song, Artist, User, Playlist],
+                entities: [User],
             }),
             inject: [ConfigService],
         }),
-        SongsModule,
-        PlaylistsModule,
         AuthModule,
         UsersModule,
-        ArtistsModule,
     ],
     controllers: [],
     providers: [],

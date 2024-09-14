@@ -11,4 +11,5 @@ export const dbConfig = () => ({
 
 export const globalConfig = () => ({
     port: process.env.PORT,
+    baseUrl: process.env.BASE_URL
 });
