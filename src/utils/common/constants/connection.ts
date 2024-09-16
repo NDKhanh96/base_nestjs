@@ -1,6 +1,7 @@
 import { getCurrentBranchNameSync } from 'src/utils/common/environment/checkGitBranch';
 
 const branchAllowAtoMigrate: string = 'develop';
+const swaggerPath: string = 'docs/api';
 
 export const dbConfig = () => ({
     host: process.env.DB_HOST,
@@ -13,5 +14,6 @@ export const dbConfig = () => ({
 
 export const globalConfig = () => ({
     port: process.env.PORT,
-    baseUrl: process.env.BASE_URL
+    baseUrl: process.env.BASE_URL,
+    swaggerPath: swaggerPath,
 });
